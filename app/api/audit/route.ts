@@ -105,7 +105,13 @@ export async function POST(req: NextRequest) {
   }
 
   // ── 6. Shape Response ───────────────────────────────────────────────────────
-  const dimensions = parseDimensions(data.dimensions)
+const dimensions = parseDimensions({
+  scalability:      data.dimensions.scalability      ?? 0,
+  observability:    data.dimensions.observability    ?? 0,
+  security:         data.dimensions.security         ?? 0,
+  cicdMaturity:     data.dimensions.cicdMaturity     ?? 0,
+  dataArchitecture: data.dimensions.dataArchitecture ?? 0,
+})
 
   return NextResponse.json({
     success: true,
