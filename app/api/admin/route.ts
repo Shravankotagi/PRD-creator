@@ -9,11 +9,11 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const [audits, emailCaptures] = await Promise.all([
+    const [audits, emailsSent] = await Promise.all([
       prisma.audit.findMany({
         orderBy: { createdAt: 'desc' },
         take: 100,
-        include: { emailCaptures: true },
+        include: { emailsSent: true },
       }),
       prisma.emailCapture.findMany({
         orderBy: { createdAt: 'desc' },
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
           : 0,
       },
       audits,
-      emailCaptures,
+      emailsSent,
     })
   } catch (err) {
     console.error('[Admin error]', err)
