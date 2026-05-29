@@ -90,7 +90,7 @@ export interface AdminAudit {
   technologies: string[]
   risks: Risk[]
   createdAt: string
-  emailCaptures: EmailCapture[]
+  emailsSent: EmailCapture[]
 }
 
 // ─── API Response Shapes ─────────────────────────────────────────────────────

@@ -59,11 +59,12 @@ export async function POST(req: NextRequest) {
   const auditResult = await runAudit(stackText)
 
   if (!auditResult.success) {
+    const failResult = auditResult as { success: false; error: string; code: string }
     return NextResponse.json(
       {
         success: false,
-        error: auditResult.error,
-        code: auditResult.code,
+        error: failResult.error,
+        code: failResult.code,
       },
       { status: 500 }
     )
@@ -80,19 +81,19 @@ export async function POST(req: NextRequest) {
     audit = await prisma.audit.create({
       data: {
         shareId,
-        inputText:      stackText,
-        overallScore:   data.overallScore,
-        scalability:    data.dimensions.scalability,
-        observability:  data.dimensions.observability,
-        security:       data.dimensions.security,
-        cicdMaturity:   data.dimensions.cicdMaturity,
-        dataArch:       data.dimensions.dataArchitecture,
-        maturityLevel:  data.maturityLevel,
-        summary:        data.summary,
-        technologies:   data.technologies,
-        strengths:      data.strengths,
-        risks:          data.risks,
-        recommendations: data.recommendations,
+        inputText:       stackText,
+        overallScore:    data.overallScore,
+        scalability:     data.dimensions.scalability,
+        observability:   data.dimensions.observability,
+        security:        data.dimensions.security,
+        cicdMaturity:    data.dimensions.cicdMaturity,
+        dataArch:        data.dimensions.dataArchitecture,
+        maturityLevel:   data.maturityLevel,
+        summary:         data.summary,
+        technologies:    data.technologies,
+        strengths:       data.strengths as object[],
+        risks:           data.risks as object[],
+        recommendations: data.recommendations as object[],
       },
     })
   } catch (err) {

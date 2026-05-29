@@ -11,14 +11,14 @@ import {
 interface StatsCardsProps {
   totalAudits: number;
   avgScore: number;
-  emailCaptures: number;
+  emailsSent: number;
   shareRate: number;
 }
 
 const stats = (
   totalAudits: number,
   avgScore: number,
-  emailCaptures: number,
+  emailsSent: number,
   shareRate: number
 ) => [
   {
@@ -35,7 +35,7 @@ const stats = (
   },
   {
     label: 'Email Captures',
-    value: emailCaptures.toLocaleString(),
+    value: emailsSent.toLocaleString(),
     icon: Mail,
     trend: '+18.1%',
   },
@@ -50,7 +50,7 @@ const stats = (
 export default function StatsCards({
   totalAudits,
   avgScore,
-  emailCaptures,
+  emailsSent,
   shareRate,
 }: StatsCardsProps) {
   return (
@@ -58,7 +58,7 @@ export default function StatsCards({
       {stats(
         totalAudits,
         avgScore,
-        emailCaptures,
+        emailsSent,
         shareRate
       ).map((stat) => {
         const Icon = stat.icon;

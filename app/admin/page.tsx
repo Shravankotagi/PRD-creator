@@ -14,7 +14,7 @@ interface AdminData {
     shareRate: number
   }
   audits: any[]
-  emailCaptures: any[]
+  emailsSent: any[]
 }
 
 export default function AdminPage() {
@@ -90,7 +90,7 @@ export default function AdminPage() {
           <StatsCards
             totalAudits={data.stats.totalAudits}
             avgScore={data.stats.avgScore}
-            emailCaptures={data.stats.totalCaptures}
+            emailsSent={data.stats.totalCaptures}
             shareRate={data.stats.shareRate}
           />
         </div>
@@ -108,14 +108,14 @@ export default function AdminPage() {
                 }`}
             >
               {t === 'reports' ? `Reports (${data.audits.length})`
-               : t === 'emails' ? `Email Leads (${data.emailCaptures.length})`
+               : t === 'emails' ? `Email Leads (${data.emailsSent.length})`
                : 'Charts'}
             </button>
           ))}
         </div>
 
         {tab === 'reports' && <ReportsTable audits={data.audits} />}
-        {tab === 'emails'  && <EmailCaptureTable captures={data.emailCaptures} />}
+        {tab === 'emails'  && <EmailCaptureTable captures={data.emailsSent} />}
         {tab === 'charts'  && <AdminBarChart audits={data.audits} />}
 
       </div>
