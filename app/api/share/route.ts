@@ -4,9 +4,9 @@ import { parseDimensions } from '@/types/audit'
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id: shareId } = params
+  const { id: shareId } = await params
 
   if (!shareId) {
     return NextResponse.json({ error: 'Share ID required.' }, { status: 400 })
