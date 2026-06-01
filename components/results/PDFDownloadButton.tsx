@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { AuditResult } from '@/types/audit'
 
 interface PDFDownloadButtonProps {
@@ -9,6 +9,11 @@ interface PDFDownloadButtonProps {
 
 export default function PDFDownloadButton({ result }: PDFDownloadButtonProps) {
   const [loading, setLoading] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   async function handleDownload() {
     setLoading(true)
@@ -16,7 +21,6 @@ export default function PDFDownloadButton({ result }: PDFDownloadButtonProps) {
       const { pdf } = await import('@react-pdf/renderer')
       const { default: AuditPDF } = await import('./AuditPDF')
       const { createElement } = await import('react')
-
       const blob = await pdf(createElement(AuditPDF, { result }) as any).toBlob()
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
@@ -30,6 +34,8 @@ export default function PDFDownloadButton({ result }: PDFDownloadButtonProps) {
       setLoading(false)
     }
   }
+
+  if (!mounted) return null
 
   return (
     <button
