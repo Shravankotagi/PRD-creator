@@ -1,5 +1,5 @@
 'use client'
-
+import PDFDownloadButton from '@/components/results/PDFDownloadButton'
 import { type AuditResult } from '@/types/audit'
 import ScoreRing from '@/components/results/ScoreRing'
 import RadarChart from '@/components/results/RadarChart'
@@ -73,6 +73,7 @@ export default function ResultsClient({ result }: Props) {
             </div>
                 <div className="flex flex-wrap gap-2 pt-2 border-t border-el-border">
                     <ShareButton shareId={shareId} />
+                    <PDFDownloadButton result={result} />
                     <a
                         href="/analyze"
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-el-border text-sm font-semibold text-el-body hover:border-el-blue hover:text-el-blue transition-colors duration-200"
