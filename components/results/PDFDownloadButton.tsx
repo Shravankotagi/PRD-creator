@@ -17,7 +17,7 @@ export default function PDFDownloadButton({ result }: PDFDownloadButtonProps) {
       const { default: AuditPDF } = await import('./AuditPDF')
       const { createElement } = await import('react')
 
-      const blob = await pdf(createElement(AuditPDF, { result })).toBlob()
+      const blob = await pdf(createElement(AuditPDF, { result }) as any).toBlob()
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
