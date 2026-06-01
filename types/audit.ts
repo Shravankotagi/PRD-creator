@@ -26,8 +26,10 @@ export interface Strength {
 export interface Risk {
   title: string
   severity: Severity
+  confidence?: 'HIGH' | 'MEDIUM'
   detail: string
   impact: string
+  evidence?: string
 }
 
 export interface Recommendation {
@@ -67,8 +69,14 @@ export interface AuditResult {
   technologies: string[]
   strengths: Strength[]
   risks: Risk[]
+  unknowns?: string[]
   recommendations: Recommendation[]
   createdAt: string
+  assessmentConfidence?: {
+  high_confidence: string[]
+  medium_confidence: string[]
+  unknown: string[]
+}
 }
 
 // ─── Email Capture ───────────────────────────────────────────────────────────

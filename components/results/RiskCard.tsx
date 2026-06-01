@@ -20,13 +20,23 @@ export default function RiskCard({ risk }: RiskCardProps) {
         <h3 className="text-lg font-semibold text-el-navy">
           {risk.title}
         </h3>
+          <span
+            className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${severityStyles[risk.severity]}`}
+          >
+            {risk.severity}
+          </span>
+          {risk.confidence && (
+            <span className="text-xs text-el-muted font-medium">
+              {risk.confidence === 'HIGH' ? '● High confidence' : '◐ Medium confidence'}
+            </span>
+          )}
+        </div>
 
-        <span
-          className={`inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${severityStyles[risk.severity]}`}
-        >
-          {risk.severity}
-        </span>
-      </div>
+      {risk.evidence && (
+        <div className="mb-3 px-3 py-2 bg-gray-50 border-l-2 border-el-blue rounded text-xs text-el-muted italic">
+          Evidence: "{risk.evidence}"
+        </div>
+      )}
 
       <p className="mb-5 text-sm leading-6 text-el-body">
         {risk.detail}

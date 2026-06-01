@@ -65,6 +65,51 @@ export default function ResultsClient({ result }: Props) {
             <p className="text-xs text-el-muted mt-1">Overall Score</p>
           </div>
 
+          {/* ── Assessment Confidence ─────────────────────────────────── */}
+          {result.assessmentConfidence && (
+            <div className="el-card">
+              <h2 className="text-el-heading font-bold text-lg mb-4">Assessment Confidence</h2>
+              <div className="grid md:grid-cols-3 gap-4">
+                {result.assessmentConfidence.high_confidence?.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-green-600 uppercase tracking-wide mb-2">✓ High Confidence</p>
+                    <ul className="space-y-1">
+                      {result.assessmentConfidence.high_confidence.map((t, i) => (
+                        <li key={i} className="text-sm text-el-body flex items-center gap-2">
+                          <span className="text-green-500">●</span>{t}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {result.assessmentConfidence.medium_confidence?.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-yellow-600 uppercase tracking-wide mb-2">◐ Medium Confidence</p>
+                    <ul className="space-y-1">
+                      {result.assessmentConfidence.medium_confidence.map((t, i) => (
+                        <li key={i} className="text-sm text-el-body flex items-center gap-2">
+                          <span className="text-yellow-500">◐</span>{t}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {result.assessmentConfidence.unknown?.length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-el-muted uppercase tracking-wide mb-2">? Unknown</p>
+                    <ul className="space-y-1">
+                      {result.assessmentConfidence.unknown.map((t, i) => (
+                        <li key={i} className="text-sm text-el-muted flex items-center gap-2">
+                          <span>?</span>{t}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Summary */}
           <div className="el-card md:col-span-2 flex flex-col justify-between gap-4">
             <div>
@@ -141,6 +186,26 @@ export default function ResultsClient({ result }: Props) {
             )}
           </div>
         )}
+
+        {/* ── Unknowns ──────────────────────────────────────────────── */}
+          {result.unknowns && result.unknowns.length > 0 && (
+            <div className="el-card border-l-4 border-l-yellow-400">
+              <h2 className="text-el-heading font-bold text-lg mb-3 flex items-center gap-2">
+                <span>⚠️</span> Information Gaps
+              </h2>
+              <p className="text-sm text-el-muted mb-3">
+                The following areas were not mentioned in your input. These may represent risks we could not assess:
+              </p>
+              <ul className="space-y-2">
+                {result.unknowns.map((unknown, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-el-body">
+                    <span className="text-yellow-500 mt-0.5">•</span>
+                    {unknown}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
         {/* ── Strengths ─────────────────────────────────────────────── */}
         {strengths.length > 0 && (

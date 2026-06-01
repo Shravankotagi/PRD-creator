@@ -11,10 +11,12 @@ const StrengthSchema = z.object({
 })
 
 const RiskSchema = z.object({
-  title:    z.string().min(1),
-  severity: SeveritySchema,
-  detail:   z.string().min(1),
-  impact:   z.string().min(1),
+  title:      z.string().min(1),
+  severity:   SeveritySchema,
+  confidence: z.enum(['HIGH', 'MEDIUM']).optional(),
+  evidence:   z.string().optional(),
+  detail:     z.string().min(1),
+  impact:     z.string().min(1),
 })
 
 const RecommendationSchema = z.object({
@@ -39,9 +41,15 @@ export const AuditOutputSchema = z.object({
   summary:         z.string().min(10),
   dimensions:      DimensionsSchema,
   technologies:    z.array(z.string()).min(1).max(30),
-  strengths:       z.array(StrengthSchema).min(1).max(6),
-  risks:           z.array(RiskSchema).min(1).max(8),
+  strengths:       z.array(StrengthSchema).min(0).max(6),
+  risks:           z.array(RiskSchema).min(0).max(8),
+  unknowns:        z.array(z.string()).optional(),
   recommendations: z.array(RecommendationSchema).min(1).max(6),
+  assessmentConfidence: z.object({
+  high_confidence:   z.array(z.string()).optional(),
+  medium_confidence: z.array(z.string()).optional(),
+  unknown:           z.array(z.string()).optional(),
+}).optional(),
 })
 
 // ─── Inferred Type ────────────────────────────────────────────────────────────
