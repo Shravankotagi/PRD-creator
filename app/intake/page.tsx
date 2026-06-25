@@ -296,6 +296,12 @@ function IntakeContent() {
     if (!trimmed || isSubmitting) return;
 
     setIsSubmitting(true);
+
+    // Show the user's message immediately — before any async network calls
+    const userMessage: Message = { role: "user", content: trimmed };
+    setMessages((prev) => [...prev, userMessage]);
+    setInputValue("");
+
     try {
       if (currentQuestionIndex === 0 && !sessionId) {
         try {
@@ -316,10 +322,6 @@ function IntakeContent() {
           return;
         }
       }
-
-      const userMessage: Message = { role: "user", content: trimmed };
-      setMessages((prev) => [...prev, userMessage]);
-      setInputValue("");
 
       // Validate answer relevance
       const previousAnswers = INTAKE_QUESTIONS.slice(0, currentQuestionIndex).map(q => ({
