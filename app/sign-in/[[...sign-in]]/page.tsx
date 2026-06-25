@@ -52,7 +52,9 @@ export default function SignInPage() {
         throw signInError;
       }
 
-      window.location.href = "/dashboard";
+      // Small delay ensures the auth cookie is fully written before navigation
+      // This fixes sign-in failures on mobile browsers
+      setTimeout(() => { router.push("/dashboard"); }, 300);
       return;
     } catch (signInErr: any) {
       // If user not found, attempt Auto-Signup in test instance
@@ -74,7 +76,7 @@ export default function SignInPage() {
             throw signUpError;
           }
 
-          window.location.href = "/dashboard";
+          setTimeout(() => { router.push("/dashboard"); }, 300);
           return;
         } catch (signUpErr: any) {
           setError(signUpErr.message || "Authentication failed.");
@@ -187,7 +189,7 @@ export default function SignInPage() {
         throw new Error(data.error || "Registration failed");
       }
 
-      window.location.href = "/dashboard";
+      setTimeout(() => { router.push("/dashboard"); }, 300);
     } catch (err: any) {
       setError(err.message || "An error occurred during registration.");
     } finally {
@@ -197,7 +199,7 @@ export default function SignInPage() {
 
   return (
     <div 
-      className="min-h-screen bg-slate-50 flex flex-col relative overflow-hidden px-4 py-8 animate-fade-in"
+      className="min-h-screen bg-slate-50 flex flex-col relative overflow-hidden px-4 py-8 pt-20 sm:pt-8 animate-fade-in"
       style={{
         backgroundImage: "radial-gradient(#e2e8f0 1.2px, transparent 1.2px)",
         backgroundSize: "24px 24px"

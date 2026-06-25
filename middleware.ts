@@ -15,9 +15,12 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check if Better Auth session cookie exists
+  // Mobile browsers may handle cookie names with dots differently, so check all variants
   const sessionToken = 
     request.cookies.get("better-auth.session_token") || 
-    request.cookies.get("__secure-better-auth.session_token");
+    request.cookies.get("__secure-better-auth.session_token") ||
+    request.cookies.get("better-auth_session_token") ||
+    request.cookies.get("better-auth-session-token");
 
   const isLoggedIn = !!sessionToken;
 
@@ -32,6 +35,11 @@ export function middleware(request: NextRequest) {
   const isPublic = publicRoutes.some(route => 
     pathname === route || pathname.startsWith(route + "/")
   );
+
+  // Redirect already-logged-in users away from sign-in page to dashboard
+  if (isLoggedIn && pathname === "/sign-in") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
 
   // If the route is private and the user is not logged in, redirect to sign-in
   if (!isPublic && !isLoggedIn) {
