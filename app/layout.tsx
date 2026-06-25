@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
+import { ConditionalLayout } from '@/components/layout/ConditionalLayout'
 import { Toaster } from 'sonner'
 
 const inter = Inter({
@@ -12,29 +11,28 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Enlight Lab - Tech Stack Auditor',
+  title: 'PRD Creator — Enlight Lab',
   description:
-    'Paste your tech stack or job listing and get an instant AI-powered risk and gap analysis with Enlight Lab service recommendations.',
+    'Generate a complete, engineering-ready Product Requirements Document in minutes.',
   keywords: [
-    'tech stack audit',
-    'architecture review',
-    'CTO tool',
-    'engineering audit',
+    'PRD creator',
+    'product requirements document',
+    'product manager tool',
+    'AI PRD generator',
     'Enlight Lab',
-    'scalability assessment',
   ],
   openGraph: {
-    title: 'Tech Stack Auditor — Enlight Lab',
+    title: 'PRD Creator — Enlight Lab',
     description:
-      'Get an instant AI-powered audit of your tech stack. Identify risks, gaps, and get expert recommendations.',
+      'Generate a complete, engineering-ready PRD in minutes using AI.',
     url: process.env.NEXT_PUBLIC_APP_URL,
     siteName: 'Enlight Lab',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tech Stack Auditor — Enlight Lab',
-    description: 'Instant AI-powered tech stack risk and gap analysis.',
+    title: 'PRD Creator — Enlight Lab',
+    description: 'Generate a complete, engineering-ready PRD in minutes using AI.',
   },
 }
 
@@ -46,11 +44,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-el-bg flex flex-col">
-        <Navbar />
-        <main className="flex-1">
+        <ConditionalLayout>
           {children}
-        </main>
-        <Footer />
+        </ConditionalLayout>
         <Toaster
           position="bottom-right"
           toastOptions={{

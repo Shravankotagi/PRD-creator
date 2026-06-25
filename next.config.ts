@@ -1,14 +1,21 @@
-import type { NextConfig } from 'next'
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ['@prisma/client'],
-  turbopack: {},
   devIndicators: false,
+  serverExternalPackages: ["@prisma/client", "@react-pdf/renderer"],
+
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'enlightlab.com' },
+      {
+        protocol: "https",
+        hostname: "enlightlab.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.enlightlab.com",
+      },
     ],
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

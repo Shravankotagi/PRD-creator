@@ -3,36 +3,194 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-model Audit {
-  id              String         @id @default(cuid())
-  shareId         String         @unique
-  inputText       String         @db.Text
-  overallScore    Int
-  scalability     Int
-  observability   Int
-  security        Int
-  cicdMaturity    Int
-  dataArch        Int
-  maturityLevel   String
-  summary         String         @db.Text
-  technologies    String[]
-  strengths       Json
-  risks           Json
-  recommendations Json
-  createdAt       DateTime       @default(now())
-  emailsSent      EmailCapture[]
+model User {
+  id                  String   @id @default(cuid())
+  email               String   @unique
+  phone               String?  @unique
+  clerkId             String?  @unique
+  name                String?
+  avatarUrl           String?
+  plan                Plan     @default(FREE)
+  notionAccessToken   String?
+  notionWorkspaceId   String?
+  notionWorkspaceName String?
+  notionBotId         String?
+  stripeCustomerId    String?
+  stripeSubscriptionId String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  emailVerified       Boolean  @default(false)
+  image               String?
+
+  proSessionsLeft     Int      @default(2)
+  freeSessionsLeft    Int      @default(5)
+
+  sessions      Session[]
+  payments      Payment[]
+  exports       Export[]
+  authSessions  AuthSession[]
+  accounts      Account[]
 }
 
-model EmailCapture {
-  id        String   @id @default(cuid())
-  email     String
-  name      String
-  company   String?
-  auditId   String
-  audit     Audit    @relation(fields: [auditId], references: [id])
-  createdAt DateTime @default(now())
+model Session {
+  id           String        @id @default(cuid())
+  userId       String
+  status       SessionStatus @default(IN_PROGRESS)
+  plan         Plan          @default(FREE)
+  notionPageUrl String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  intake    Intake?
+  prd       PRD?
+}
+
+model Intake {
+  id                String   @id @default(cuid())
+  sessionId         String   @unique
+  productName       String?
+  problemStatement  String?
+  targetUser        String?
+  coreUseCases      String?
+  knownConstraints  String?
+  successMetrics    String?
+  nonGoals          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  completedAt       DateTime?
+  session           Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model PRD {
+  id                  String   @id @default(cuid())
+  sessionId           String   @unique
+  shareId             String   @unique @default(cuid())
+  executiveSummary    String?
+  tier                String?
+  priority            String?
+  deployment          String?
+  monetisation        String?
+  primaryUser         String?
+  problem             String?
+  goal                String?
+  userStory           String?
+  userStories         Json?
+  functionalReqs      Json?
+  nonFunctionalReqs   Json?
+  outOfScope          Json?
+  successMetrics      Json?
+  assumptions         Json?
+  openQuestions       Json?
+  risksAndMitigations Json?
+  edgeCases           Json?
+  techStack           Json?
+  timeline            Json?
+  glossary            Json?
+  versionHistory      Json?
+  stakeholders        Json?
+  version             Int      @default(1)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  session             Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  exports             Export[]
+}
+
+model Export {
+  id        String     @id @default(cuid())
+  prdId     String
+  userId    String
+  type      ExportType
+  createdAt DateTime   @default(now())
+
+  prd       PRD        @relation(fields: [prdId], references: [id], onDelete: Cascade)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id               String        @id @default(cuid())
+  userId           String
+  stripeCustomerId String?
+  stripeSessionId  String?
+  amount           Int?
+  status           PaymentStatus @default(PENDING)
+  createdAt        DateTime      @default(now())
+
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Plan {
+  FREE
+  PAID
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  GENERATING
+  COMPLETED
+  REVIEW
+  ACCEPTED
+}
+
+enum ExportType {
+  PDF
+  NOTION
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model AuthSession {
+  id             String   @id @default(cuid())
+  expiresAt      DateTime
+  token          String   @unique
+  impersonatedBy String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  ipAddress      String?
+  userAgent      String?
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("auth_session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("verification")
 }

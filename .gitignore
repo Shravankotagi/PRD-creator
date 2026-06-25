@@ -4,3 +4,6 @@ node_modules
 .env.local
 .vercel
 *.dll.node
+.agents/
+scratch/
+tsconfig.tsbuildinfo
