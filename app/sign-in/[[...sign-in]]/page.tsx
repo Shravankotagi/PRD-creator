@@ -8,16 +8,6 @@ import BrandLogo from "@/components/BrandLogo";
 export default function SignInPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
-  const [initialCheckDone, setInitialCheckDone] = useState(false);
-
-  useEffect(() => {
-    if (!isPending && !initialCheckDone) {
-      setInitialCheckDone(true);
-      if (session) {
-        window.location.href = "/dashboard";
-      }
-    }
-  }, [isPending, session, initialCheckDone]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -252,8 +242,53 @@ export default function SignInPage() {
 
         {/* Central Sign-in Card */}
         <div className="w-full max-w-[460px] bg-white rounded-3xl border border-slate-150 shadow-2xl p-8 sm:p-10 z-20 mx-auto relative animate-fade-in">
-          
-          <div className="text-center mb-6">
+          {!isPending && session ? (
+            <div className="space-y-6 py-4 text-center">
+              <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-xl font-black text-slate-800 tracking-tight mb-1">
+                  Already Signed In
+                </h1>
+                <p className="text-slate-500 text-xs font-semibold">Signed in as</p>
+                <p className="text-sm font-bold text-slate-800 mt-1">{session.user.name}</p>
+                <p className="text-xs text-slate-400 mt-0.5">{session.user.email}</p>
+              </div>
+              <div className="space-y-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => { window.location.href = "/dashboard"; }}
+                  className="w-full bg-blue-700 text-white font-bold py-3.5 px-4 rounded-xl hover:bg-blue-800 transition-all shadow-lg shadow-blue-700/10 flex items-center justify-center gap-2 text-sm"
+                >
+                  <span>Go to Dashboard</span>
+                  <span>→</span>
+                </button>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={async () => {
+                    setLoading(true);
+                    try {
+                      await authClient.signOut();
+                      window.location.reload();
+                    } catch (err) {
+                      console.error("Sign out error", err);
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                  className="w-full border border-slate-200 text-slate-600 font-bold py-3.5 px-4 rounded-xl hover:bg-slate-50 transition-all flex items-center justify-center text-sm disabled:opacity-50"
+                >
+                  {loading ? "Signing out..." : "Sign Out"}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="text-center mb-6">
             <h1 className="text-2xl font-black text-slate-800 tracking-tight">
               {isResettingPassword 
                 ? "Reset your password" 
@@ -703,6 +738,8 @@ export default function SignInPage() {
                 )}
               </button>
             </form>
+          )}
+            </>
           )}
         </div>
 
