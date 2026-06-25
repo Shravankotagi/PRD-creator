@@ -105,7 +105,7 @@ export default function HomePage() {
         style={{
           width: "200px",
           height: "200px",
-          background: "radial-gradient(circle, rgba(26, 65, 219, 0.14) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(26, 65, 219, 0.11) 0%, transparent 70%)",
           left: `${coords.x - 100}px`,
           top: `${coords.y - 100}px`,
           transform: "translate3d(0, 0, 0)",
@@ -130,7 +130,7 @@ export default function HomePage() {
           <div>
             {/* Top Pill Badge (no emoji) */}
             <div className="inline-flex items-center gap-2 bg-el-blue-light text-el-blue text-xs font-semibold px-4 py-1.5 rounded-full border border-blue-100/60 mb-6 shadow-sm">
-              <span className="w-1.5 h-1.5 rounded-full bg-el-blue animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
               Tool by Enlight Lab
             </div>
             
