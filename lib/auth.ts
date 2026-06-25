@@ -4,12 +4,19 @@ import { prisma } from '@/lib/prisma';
 import { headers } from 'next/headers';
 import { User } from '@/types/session';
 
+const getBaseURL = () => {
+  if (process.env.BETTER_AUTH_URL) return process.env.BETTER_AUTH_URL;
+  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+};
+
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
   secret: process.env.BETTER_AUTH_SECRET || "prd_creator_better_auth_secret_secure_key_2026",
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL: getBaseURL(),
   // Allow requests from both the Vercel production domain and localhost
   // Without this, server-side getSession() rejects the session on Vercel (mobile)
   trustedOrigins: [
