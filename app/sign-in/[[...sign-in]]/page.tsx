@@ -8,12 +8,16 @@ import BrandLogo from "@/components/BrandLogo";
 export default function SignInPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
+  const [initialCheckDone, setInitialCheckDone] = useState(false);
 
   useEffect(() => {
-    if (!isPending && session) {
-      router.push("/dashboard");
+    if (!isPending && !initialCheckDone) {
+      setInitialCheckDone(true);
+      if (session) {
+        window.location.href = "/dashboard";
+      }
     }
-  }, [isPending, session, router]);
+  }, [isPending, session, initialCheckDone]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
