@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
   // Check if Better Auth session cookie exists
   const sessionToken = 
     request.cookies.get("better-auth.session_token") || 
-    request.cookies.get("__secure-better-auth.session_token");
+    request.cookies.get("__Secure-better-auth.session_token")
 
   const isLoggedIn = !!sessionToken;
 
