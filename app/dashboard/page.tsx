@@ -100,8 +100,10 @@ export default function DashboardPage() {
     let active = true;
 
     fetch("/api/dashboard")
-      .then(r => {
+      .then(async r => {
         if (r.status === 401) {
+          const body = await r.json().catch(() => ({}));
+          alert("Debug Info:\n" + JSON.stringify(body.debug, null, 2));
           router.push("/sign-in");
           throw new Error("Unauthorized");
         }

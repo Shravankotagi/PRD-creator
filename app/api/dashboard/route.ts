@@ -2,11 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getAuthUserId } from "@/lib/auth";
 
+import { headers } from "next/headers";
+
 export async function GET(req: NextRequest) {
   try {
     const userId = await getAuthUserId();
     if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      const cookieHeader = req.headers.get("cookie") || "No cookies in req.headers";
+      const nextHeadersList = await headers();
+      const nextHeaders = nextHeadersList.get("cookie") || "No cookies in next/headers";
+      return NextResponse.json({ 
+        error: "Unauthorized", 
+        debug: {
+          cookieHeader,
+          nextHeaders,
+          envUrl: process.env.BETTER_AUTH_URL,
+          reqUrl: req.url,
+        }
+      }, { status: 401 });
     }
 
     const user = await prisma.user.findUnique({
