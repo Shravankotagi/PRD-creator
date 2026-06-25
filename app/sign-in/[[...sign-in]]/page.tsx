@@ -7,6 +7,13 @@ import BrandLogo from "@/components/BrandLogo";
 
 export default function SignInPage() {
   const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+
+  useEffect(() => {
+    if (!isPending && session) {
+      router.push("/dashboard");
+    }
+  }, [isPending, session, router]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,9 +59,9 @@ export default function SignInPage() {
         throw signInError;
       }
 
-      // Small delay ensures the auth cookie is fully written before navigation
-      // This fixes sign-in failures on mobile browsers
-      setTimeout(() => { router.push("/dashboard"); }, 300);
+      // Delay ensures the auth cookie is fully written before navigation
+      // Using window.location.href ensures a full reload and cookie transfer
+      setTimeout(() => { window.location.href = "/dashboard"; }, 500);
       return;
     } catch (signInErr: any) {
       // If user not found, attempt Auto-Signup in test instance
@@ -76,7 +83,7 @@ export default function SignInPage() {
             throw signUpError;
           }
 
-          setTimeout(() => { router.push("/dashboard"); }, 300);
+          setTimeout(() => { window.location.href = "/dashboard"; }, 500);
           return;
         } catch (signUpErr: any) {
           setError(signUpErr.message || "Authentication failed.");
@@ -189,7 +196,7 @@ export default function SignInPage() {
         throw new Error(data.error || "Registration failed");
       }
 
-      setTimeout(() => { router.push("/dashboard"); }, 300);
+      setTimeout(() => { window.location.href = "/dashboard"; }, 500);
     } catch (err: any) {
       setError(err.message || "An error occurred during registration.");
     } finally {

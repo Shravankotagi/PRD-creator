@@ -140,7 +140,7 @@ export default function HomePage() {
             </h1>
             
             <p className="text-slate-500 text-base sm:text-lg mb-8 leading-relaxed max-w-xl">
-              Answer 7 guided questions. Get a comprehensive, structured PRD - complete with user stories, acceptance criteria, edge cases, and non-functional requirements. Ready to hand to your engineering team.
+              Answer few guided questions. Get a comprehensive, structured PRD - complete with user stories, acceptance criteria, edge cases, and non-functional requirements. Ready to hand to your engineering team.
             </p>
             
             <div className="flex items-center gap-3 mb-8 bg-white border border-slate-200/80 px-4 py-3.5 rounded-xl max-w-md shadow-sm">
@@ -555,7 +555,7 @@ export default function HomePage() {
             {[
               {
                 n: "01",
-                title: "Answer 7 Questions",
+                title: "Answer few Questions",
                 desc: "Identify your product target, core issues, user segment, features, limits, metrics, and out-of-scope tasks. Takes about 5 minutes.",
                 icon: (
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -566,7 +566,7 @@ export default function HomePage() {
               {
                 n: "02",
                 title: "AI Drafts Specifications",
-                desc: "Gemini 1.5 Pro structures your inputs into a comprehensive PRD — detailing critical security requirements, database choices, and edge cases.",
+                desc: "Gemini 1.5 Pro structures your inputs into a comprehensive PRD - detailing critical security requirements, database choices, and edge cases.",
                 icon: (
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2a5 5 0 015 5c0 1.8-.9 3.3-2.3 4.2L16 21H8l1.3-9.8A5 5 0 017 7a5 5 0 015-5z"/><path d="M9 21h6"/>
@@ -614,7 +614,7 @@ export default function HomePage() {
             Your PRD is 7 Questions Away
           </h2>
           <p className="text-slate-300 text-sm sm:text-base mb-8 leading-relaxed max-w-xl mx-auto">
-            Stop staring at a blank Notion page. Let AI write the first draft — your team ships faster.
+            Stop staring at a blank Notion page. Let AI write the first draft - your team ships faster.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link
