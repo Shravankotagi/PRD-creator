@@ -10,8 +10,19 @@ export const auth = betterAuth({
   }),
   secret: process.env.BETTER_AUTH_SECRET || "prd_creator_better_auth_secret_secure_key_2026",
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  // Allow requests from both the Vercel production domain and localhost
+  // Without this, server-side getSession() rejects the session on Vercel (mobile)
+  trustedOrigins: [
+    "https://prd-creator-six.vercel.app",
+    "http://localhost:3000",
+    ...(process.env.NEXT_PUBLIC_APP_URL ? [process.env.NEXT_PUBLIC_APP_URL] : []),
+  ],
   session: {
     modelName: 'AuthSession',
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 5, // 5 minutes
+    },
   },
   account: {
     modelName: 'Account',
