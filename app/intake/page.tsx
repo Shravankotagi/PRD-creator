@@ -497,9 +497,6 @@ function IntakeContent() {
       <header className="intake-header">
         <BrandLogo href="/dashboard" />
         <div className="intake-progress-wrap">
-          <span className="progress-label">
-            {isComplete ? "Complete" : `${currentQuestionIndex} of ${INTAKE_QUESTIONS.length}`}
-          </span>
           <div className="progress-track">
             <div className="progress-fill" style={{ width: `${progress}%` }} />
           </div>

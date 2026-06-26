@@ -167,12 +167,13 @@ export default function DashboardPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={handleNewPRD}
-              className="flex items-center gap-1.5 bg-[#1a3aff] text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm hover:bg-blue-700 transition-all"
+              className="flex items-center gap-1 bg-[#1a3aff] text-white px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold shadow-sm hover:bg-blue-700 transition-all"
             >
-              <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
+              <svg width="10" height="10" viewBox="0 0 14 14" fill="none" className="flex-shrink-0">
                 <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
               </svg>
-              Create Session
+              <span className="hidden min-[390px]:inline">Create Session</span>
+              <span className="inline min-[390px]:hidden">Create</span>
             </button>
 
             {/* Profile Dropdown */}

@@ -9,17 +9,19 @@ interface BrandLogoProps {
 
 export default function BrandLogo({ href = "/", onClick, className = "" }: BrandLogoProps) {
   const content = (
-    <div className="flex flex-col items-center justify-center text-center select-none leading-none">
+    <div className="flex flex-col items-center justify-center text-center select-none leading-none max-w-full">
       <Image
         src="https://enlightlab.com/wp-content/uploads/2023/03/Layer_1.png"
         alt="Enlight Lab"
         width={130}
         height={36}
-        className={`h-8 w-auto object-contain ${className}`}
+        className={`h-6 min-[375px]:h-7 sm:h-8 w-auto object-contain transition-all duration-200 ${className}`}
         unoptimized
         onClick={onClick}
       />
-      <span style={{ fontSize: "0.625rem", fontWeight: 700, color: "#0A1F6B", letterSpacing: "0.15em", textTransform: "uppercase", marginTop: "4px" }}>PRD GENERATOR</span>
+      <span className="text-[7px] min-[375px]:text-[8px] sm:text-[10px] font-bold text-[#0A1F6B] tracking-[0.15em] uppercase mt-1 transition-all duration-200">
+        PRD GENERATOR
+      </span>
     </div>
   );
 
