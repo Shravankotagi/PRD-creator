@@ -11,7 +11,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'PRD Creator — Enlight Lab',
+  title: 'Enlight Lab — PRD Creator',
   description:
     'Generate a complete, engineering-ready Product Requirements Document in minutes.',
   keywords: [

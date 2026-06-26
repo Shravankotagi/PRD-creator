@@ -232,7 +232,7 @@ export default function SignInPage() {
       <div className="flex-1 flex items-center justify-center relative w-full max-w-7xl mx-auto">
         
         {/* Left Floating Card: PRD Intake Flow (Hidden on mobile) */}
-        <div className="hidden lg:block absolute left-4 w-72 bg-white rounded-2xl border border-slate-100 shadow-xl p-5 select-none transform -rotate-2 hover:rotate-0 transition-transform duration-300 z-10">
+        <div className="hidden lg:block absolute left-4 w-72 bg-white rounded-2xl border border-slate-100 shadow-xl p-5 select-none transform -rotate-6 -translate-y-16 hover:rotate-0 hover:translate-y-0 transition-all duration-300 z-10">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-2.5 h-2.5 bg-blue-600 rounded-full animate-pulse" />
             <span className="text-[10px] font-black tracking-widest text-blue-600 uppercase">
@@ -729,7 +729,7 @@ export default function SignInPage() {
         </div>
 
         {/* Right Floating Card: AI PRD Builder (Hidden on mobile) */}
-        <div className="hidden lg:block absolute right-4 w-72 bg-white rounded-2xl border border-slate-100 shadow-xl p-5 select-none transform rotate-2 hover:rotate-0 transition-transform duration-300 z-10">
+        <div className="hidden lg:block absolute right-4 w-72 bg-white rounded-2xl border border-slate-100 shadow-xl p-5 select-none transform rotate-6 translate-y-16 hover:rotate-0 hover:translate-y-0 transition-all duration-300 z-10">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse" />
             <span className="text-[10px] font-black tracking-widest text-emerald-600 uppercase">

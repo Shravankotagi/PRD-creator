@@ -727,7 +727,7 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <a
-              href="https://enlightlab.com/contact"
+              href="https://cal.com/dhananjay-goel/30min"
               className="bg-el-blue text-white px-8 py-3.5 rounded-xl font-bold hover:bg-el-blue-dark transition-all duration-200 inline-flex items-center gap-2.5 shadow-md shadow-el-blue/10"
             >
               Book a Discovery Call
