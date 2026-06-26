@@ -336,10 +336,10 @@ export default function HomePage() {
       {/* ── TRUST LOGOS BANNER (NO EMOJIS) ── */}
       <section className="border-y border-slate-200/80 bg-slate-50/50 py-10">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mb-6">
+          <p className="text-center text-[10px] font-extrabold text-el-blue uppercase tracking-widest mb-6">
             Trusted by Product Leads & Founders At
           </p>
-          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16 opacity-40 grayscale select-none">
+          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16 opacity-100 select-none">
             <span className="text-sm font-extrabold tracking-wider text-slate-605">NOTION WORKSPACE</span>
             <span className="text-sm font-extrabold tracking-wider text-slate-605">SLACK LABS</span>
             <span className="text-sm font-extrabold tracking-wider text-slate-605">FIGMA DESIGN</span>
@@ -611,7 +611,7 @@ export default function HomePage() {
         
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-5 tracking-tight">
-            Your PRD is 7 Questions Away
+            Your PRD is few Questions Away
           </h2>
           <p className="text-slate-300 text-sm sm:text-base mb-8 leading-relaxed max-w-xl mx-auto">
             Stop staring at a blank Notion page. Let AI write the first draft - your team ships faster.

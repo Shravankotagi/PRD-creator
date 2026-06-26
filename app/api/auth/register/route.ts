@@ -45,11 +45,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: errData.message || "Failed to register" }, { status: authRes.status });
     }
 
+    
     // Update user phone number in the database
-    await (prisma.user as any).update({
-      where: { email },
-      data: { phone },
-    });
+    let updated = false;
+    for (let i = 0; i < 5; i++) {
+      const user = await prisma.user.findUnique({ where: { email } });
+      if (user) {
+        await (prisma.user as any).update({
+          where: { email },
+          data: { phone },
+        });
+        updated = true;
+        break;
+      }
+      await new Promise(res => setTimeout(res, 300));
+    }
+    if (!updated) {
+      console.warn("Could not update phone for:", email);
+    }
 
     // Return the response (fowarding the Better Auth cookies and session data)
     return authRes;

@@ -17,25 +17,25 @@ export default function Navbar() {
           <nav className="hidden md:flex items-center gap-8">
             <a
               href="#features"
-              className="text-[15px] text-gray-600 hover:text-blue-700 font-semibold transition-colors"
+              className="text-[18px] text-gray-600 hover:text-blue-700 font-semibold transition-colors"
             >
               Features
             </a>
             <a
               href="#how-it-works"
-              className="text-[15px] text-gray-600 hover:text-blue-700 font-semibold transition-colors"
+              className="text-[18px] text-gray-600 hover:text-blue-700 font-semibold transition-colors"
             >
               How It Works
             </a>
             <a
               href="#demo"
-              className="text-[15px] text-gray-600 hover:text-blue-700 font-semibold transition-colors"
+              className="text-[18px] text-gray-600 hover:text-blue-700 font-semibold transition-colors"
             >
               Demo
             </a>
             <a
               href="#faq"
-              className="text-[15px] text-gray-600 hover:text-blue-700 font-semibold transition-colors"
+              className="text-[18px] text-gray-600 hover:text-blue-700 font-semibold transition-colors"
             >
               FAQ
             </a>

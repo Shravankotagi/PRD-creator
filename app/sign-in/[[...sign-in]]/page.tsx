@@ -158,8 +158,12 @@ export default function SignInPage() {
 
   const handleRegisterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setEmailError(false);
-    setPhoneError(false);
+    setName("");
+    setEmail("");
+    setPassword("");
+    setPhoneVal("");
+    setError("");
+    setTimeout(() => { window.location.href = "/dashboard"; }, 500);
 
     let hasError = false;
 
@@ -198,6 +202,11 @@ export default function SignInPage() {
         throw new Error(data.error || "Registration failed");
       }
 
+      setName("");
+      setEmail("");
+      setPassword("");
+      setPhoneVal("");
+      setError("");
       setTimeout(() => { window.location.href = "/dashboard"; }, 500);
     } catch (err: any) {
       setError(err.message || "An error occurred during registration.");
@@ -535,6 +544,7 @@ export default function SignInPage() {
                     <input
                       type="text"
                       required
+                      autoComplete="off"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="John Smith"
@@ -564,6 +574,7 @@ export default function SignInPage() {
                       setEmailError(false);
                     }}
                     placeholder="smith@gmail.com"
+                    autoComplete="off"
                     className={`w-full border rounded-xl py-3 pl-10 pr-4 text-sm font-semibold transition-all outline-none ${
                       emailError
                         ? "bg-red-50/50 border-red-300 text-red-900 placeholder-red-300 focus:bg-red-50/50 focus:border-red-500 focus:ring-1 focus:ring-red-500/20"
@@ -578,6 +589,8 @@ export default function SignInPage() {
                   </p>
                 )}
               </div>
+
+              {/* Phone Field */}
 
               {activeTab === "register" && (
                 <div>
@@ -665,6 +678,7 @@ export default function SignInPage() {
                   <input
                     type={showPassword ? "text" : "password"}
                     required
+                    autoComplete="new-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
