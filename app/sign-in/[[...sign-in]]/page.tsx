@@ -51,6 +51,7 @@ export default function SignInPage() {
       const loginPromise = authClient.signIn.email({
         email: emailToUse,
         password: passwordToUse,
+        rememberMe: false,
       });
 
       const { data, error: signInError } = (await Promise.race([loginPromise, timeoutPromise])) as any;
@@ -76,6 +77,7 @@ export default function SignInPage() {
             email: emailToUse,
             password: passwordToUse,
             name: emailToUse.split("@")[0],
+            
           });
           const { data: signUpData, error: signUpError } = (await Promise.race([signUpPromise, timeoutPromise])) as any;
 
