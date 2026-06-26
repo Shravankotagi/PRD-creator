@@ -668,10 +668,11 @@ function IntakeContent() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 16px 32px;
+          padding: 12px 16px;
           border-bottom: 1px solid #e2e8f0;
           background: rgba(255,255,255,0.92);
           backdrop-filter: blur(12px);
+          gap: 8px;
         }
 
         .intake-logo {
@@ -706,7 +707,7 @@ function IntakeContent() {
         }
 
         .progress-track {
-          width: 120px;
+          width: 60px;
           height: 3px;
           background:#e2e8f0
           border-radius: 99px;

@@ -280,7 +280,53 @@ export default function DashboardPage() {
           </div>
 
           {/* Table container */}
-          <div className="overflow-x-auto">
+          {/* Mobile card list */}
+          <div className="block sm:hidden divide-y divide-slate-100">
+            {loading ? (
+              <div className="p-6 space-y-4">
+                {[1,2,3].map(i => (
+                  <div key={i} className="space-y-2">
+                    <div className="w-32 h-4 bg-slate-100 rounded animate-pulse" />
+                    <div className="w-24 h-3 bg-slate-50 rounded animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            ) : sessions.length === 0 ? (
+              <div className="px-6 py-16 text-center text-slate-400 flex flex-col items-center gap-3">
+                <p className="font-bold text-slate-800 text-sm">No PRD sessions yet</p>
+                <button onClick={handleNewPRD} className="bg-[#1a3aff] text-white px-4 py-2 rounded-xl text-xs font-bold">+ Create Session</button>
+              </div>
+            ) : sessions.map(session => {
+              const title = session.intake?.answers?.product_name || session.prd?.title || "Untitled PRD";
+              const dateStr = new Date(session.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+              const productInitial = title[0]?.toUpperCase() || "P";
+              const isDeleting = deletingIds[session.id] ?? false;
+              return (
+                <div key={session.id} className="px-4 py-4 flex items-center justify-between gap-3 hover:bg-slate-50 cursor-pointer"
+                  onClick={() => session.prd?.id ? router.push(`/prd/${session.prd.id}`) : router.push(`/intake?sessionId=${session.id}`)}>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="w-9 h-9 rounded-full bg-blue-50 text-[#1a3aff] flex items-center justify-center font-bold text-sm flex-shrink-0">
+                      {productInitial}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="font-semibold text-slate-800 text-sm truncate">{title}</div>
+                      <div className="text-xs text-slate-400 mt-0.5">{dateStr}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <StatusBadge status={session.status} />
+                    <button onClick={e => { e.stopPropagation(); handleDelete(session.id); }} disabled={isDeleting}
+                      className="text-red-500 text-xs font-semibold disabled:opacity-50 px-1">
+                      {isDeleting ? "..." : "Delete"}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Desktop table */}
+          <div className="hidden sm:block overflow-x-auto">
             <table className="w-full border-collapse text-left">
               <thead>
                 <tr className="bg-slate-50/75 border-b border-slate-100">
